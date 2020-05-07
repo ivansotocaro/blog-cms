@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use  Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Resource_;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,4 +19,20 @@ Route::redirect('/', 'blog');
 
 Auth::routes();
 
-Route::get('blog', 'Web\PageController@blog')->name('blog');
+//Web
+Route::get('blog',               'Web\PageController@blog')->name('blog');
+
+Route::get('detallepost/{slug}', 'Web\PageController@post')->name('detallepost');
+
+Route::get('categoria/{slug}',   'Web\PageController@categoria')->name('categoria');
+
+Route::get('etiqueta/{slug}',    'Web\PageController@etiqueta')->name('etiqueta');
+
+
+//Admin
+Route::resource('tags',       'Admin\TagController');
+
+Route::resource('categories', 'Admin\CategoryController');
+
+Route::resource('posts',      'Admin\PostController');
+

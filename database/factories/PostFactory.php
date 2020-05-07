@@ -16,7 +16,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'Category_id' => factory(App\Category::class),
         'name'        => $title,
         'slug'        => $slug,
-        'excerpt'     => $faker->text(200),
+        'excerpt'     => $faker->text(1000),
         'body'        => $faker->text(500),
         'file'        => $faker->imageUrl($width = 700, $height = 300),
         'status' => $faker->randomElement(['DRAFT', 'PUBLISHED']),

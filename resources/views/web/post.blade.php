@@ -7,14 +7,15 @@
             
             <div class="col-md-10  col-md-offset-2 ">
                 
-                <h1 class="text-center">Lista de Articulos</h1>
-                @foreach($posts as $post)
+                <h1 class="text-center">{{ $post->name }}</h1>
+               
                
                 <div class="card mb-5">
 
-                    <div class="card-header text-center">
+                    <div class="card-header ">
                         
-                        {{ $post->name }}
+                       Categoria:
+                       <a href="{{ route('categoria', $post->category->slug) }}">{{ $post->category->name }}</a>
 
                     </div>
 
@@ -26,22 +27,24 @@
                         </div>
                       
                             {{ $post->excerpt }}
-                           
-                            <footer class="mt-2" style="text-align: right">
-
-                                <a href="{{ route('detallepost', $post->slug) }}" class="pull-right" style="font-size:16px">
-                                <button class="btn btn-primary">Leer más</button>
+                            <hr>
+                            {{ $post->body }}
+                            <footer class="mt-3 card-header">
+                                Etiquetas:
+                                @foreach($post->tags as $tag)
+                                <a href="{{ route('etiqueta', $tag->slug) }}">
+                                    {{$tag->name}}
                                 </a>
-
+                                @endforeach
                             </footer>  
                     </div>
 
                 </div>
                 
-                @endforeach
+               
             </div>
-                
+            
         </div>
-        {{ $posts->render() }}
+        
     </div>
 @endsection
