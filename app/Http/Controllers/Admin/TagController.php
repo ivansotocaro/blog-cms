@@ -101,7 +101,7 @@ class TagController extends Controller
 
         $tag->fill($request->all())->save();
 
-        return $this->index();
+        return back()->with('editar', 'Editado Correctamente');
     }
 
     /**

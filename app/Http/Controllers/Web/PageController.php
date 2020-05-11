@@ -19,8 +19,8 @@ class PageController extends Controller
 
     public function categoria($slug)
     {
-        $category = Category::where('slug', $slug)->pluck('id')->first();
-        $posts    = Post::where('category_id', $category)->orderBy('id', 'DESC')->where('status', 'PUBLISHED')->paginate(3);
+        $idcategory = Category::where('slug', $slug)->pluck('id')->first();
+        $posts    = Post::where('category_id', $idcategory)->orderBy('id', 'DESC')->where('status', 'PUBLISHED')->paginate(3);
        
         return view('web/posts', compact('posts'));
     }
