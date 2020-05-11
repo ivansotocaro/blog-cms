@@ -43,14 +43,5 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-
-document.getElementById("name").addEventListener('keyup', autoCompleteNew);
-
-function autoCompleteNew(e) {            
-    var value = $(this).val();         
-    $("#slug").val(value.replace(/\s/g, '-').toLowerCase()); 
-}
-
-</script>
+<script src="{{ asset('js/formEtiqueta.js') }}"></script>
 @endsection
