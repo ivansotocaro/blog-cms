@@ -7,7 +7,7 @@
       <div class="card">
 
         <div class="card-header d-flex justify-content-between  align-items-center">
-           <span>Volver Etiquetas</span>
+           <span>Ver Etiquetas</span>
             <a href="{{ route('tags.index') }}" class="btn btn-primary btn-sm">Volver a lista de Etiquetas</a>
         </div>
 

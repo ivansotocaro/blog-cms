@@ -6,7 +6,7 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-           <span>Editar Etiquetas</span>
+           <span>Editar Categorias</span>
             <!-- <a href="{{ route('tags.index') }}" class="btn btn-primary btn-sm">Volver a lista de Etiquetas</a> -->
         </div>
         <div class="card-body">     
@@ -14,7 +14,7 @@
                 <div class="alert alert-success">{{ session('editar') }}</div>
             @endif
            
-          <form method="post" action="{{ route('tags.update', $tag->id) }}">
+          <form method="post" action="{{ route('categories.update', $category->id) }}">
             @method('PUT')
             @csrf
             
@@ -22,7 +22,7 @@
             id="name"
             type="text"
             name="name"
-            value="{{ $tag->name }}"
+            value="{{ $category->name }}"
             class="form-control mb-2"
             />
 
@@ -30,10 +30,18 @@
             id="slug"
             type="text"
             name="slug"
-            value="{{ $tag->slug }}"
+            value="{{ $category->slug }}"
             class="form-control mb-2"
             readonly="readonly"
             />
+
+            <label>Descripción</label>
+            <input
+            id="body"
+            type="text"
+            name="body"
+            value="{{ $category->body }}"
+            class="form-control mb-4"/>
             
             <button id="add" class="btn btn-primary btn-block" type="submit">Editar</button>
 
@@ -47,5 +55,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/formEtiqueta.js') }}"></script>
+<script src="{{ asset('js/formCategoria.js') }}"></script>
 @endsection

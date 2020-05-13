@@ -6,14 +6,14 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header d-flex justify-content-between  align-items-center">
-           <span>Agregar Etiquetas</span>
+           <span>Agregar Categorias</span>
             <!-- <a href="{{ route('tags.index') }}" class="btn btn-primary btn-sm">Volver a lista de Etiquetas</a> -->
         </div>
         <div class="card-body">     
             @if ( session('agregar') )
                 <div class="alert alert-success">{{ session('agregar') }}</div>
             @endif
-          <form method="post" action="{{ route('tags.store') }}">
+          <form method="post" action="{{ route('categories.store') }}">
             @csrf
             <input
             id="name"
@@ -32,6 +32,14 @@
             readonly="readonly"
             />
 
+            <label>Descripción</label>
+            <textarea 
+            id="body" 
+            name="body"
+            rows="3"
+            cols="78"></textarea>
+            
+         
             <button id="add" class="btn btn-primary btn-block" type="submit">Agregar</button>
 
           </form>
