@@ -31,8 +31,7 @@ class PageController extends Controller
 
         $posts    = Post::whereHas('tags', function($query) use ($slug){
             $query->where('slug', $slug);
-        })
-        ->orderBy('id', 'DESC')->where('status', 'PUBLISHED')->paginate(3);
+        })->orderBy('id', 'DESC')->where('status', 'PUBLISHED')->paginate(3);
        
         return view('web/posts', compact('posts'));
     }

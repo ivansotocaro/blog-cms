@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Post;
+use App\Tag;
+use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -27,7 +34,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderBy('id', 'DESC')->where('user_id', auth()->user()->id)->paginate(7);
+        return view('admin.post.index', compact('posts'));
     }
 
     /**
@@ -36,8 +44,13 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $categories = Category::orderBy('name', 'ASC')->get();
+
+        $tags       = Tag::orderBy('name', 'ASC')->get();
+
+        return view('admin.post.create', compact('categories','tags'));
+
     }
 
     /**
@@ -46,9 +59,29 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+
+        $post = new Post();
+
+        $post->user_id = $request->user_id;
+        $post->category_id = $request->category_id;
+        $post->name = $request->name;
+        $post->slug = $request->slug;
+        $post->status = $request->status;
+        $post->excerpt = $request->excerpt;
+        $post->body = $request->body;
+        $post->save();
+        // $post = Post::create($request->all());
+
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image', $request->file('file'));
+            $post->fill(['file' => asset($path)])->save();
+        }
+
+        $post->tags()->attach($request->get('tags'));
+
+        return back()->with('agregar', 'Agregado Correctamente');
     }
 
     /**
@@ -59,7 +92,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -70,7 +105,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::orderBy('name', 'ASC')->get();
+
+        $tags       = Tag::orderBy('name', 'ASC')->get();
+
+        $post       = Post::find($id);
+        
+        return view('admin.post.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -82,7 +123,26 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        
+        $post->user_id = $request->user_id;
+        $post->category_id = $request->category_id;
+        $post->name = $request->name;
+        $post->slug = $request->slug;
+        $post->status = $request->status;
+        $post->excerpt = $request->excerpt;
+        $post->body = $request->body;
+        $post->save();
+        // $post->fill($request->all())->save();
+
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image', $request->file('file'));
+            $post->fill(['file' => asset($path)])->save();
+        }
+
+        $post->tags()->sync($request->get('tags'));
+
+        return back()->with('editar', 'Editado Correctamente');
     }
 
     /**
@@ -93,6 +153,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::find($id)->delete();
+
+        return back()->with('delete', 'Eliminado Correctamente');
     }
 }
