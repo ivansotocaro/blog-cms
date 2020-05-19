@@ -6,12 +6,12 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header d-flex justify-content-between  align-items-center">
-           <span>Agregar Post</span>
+           <span>editar Post</span>
             <!-- <a href="{{ route('tags.index') }}" class="btn btn-primary btn-sm">Volver a lista de Etiquetas</a> -->
         </div>
         <div class="card-body">     
-            @if ( session('agregar') )
-                <div class="alert alert-success">{{ session('agregar') }}</div>
+            @if ( session('editar') )
+                <div class="alert alert-success">{{ session('editar') }}</div>
             @endif
           <form method="post" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data">
             @method('PUT')
@@ -27,7 +27,9 @@
             
             <select class="mb-3" style="display: block" name="category_id">
             @foreach($categories as $category)
-              <option value="{{ $category->id }}">{{ $category->name }}</option>
+              <option value="{{ $category->id }}"
+                 {{ $category->id == $post->category->id ? 'selected' : '' }}>
+                 {{ $category->name }}</option>
             @endforeach
             </select> 
 
@@ -52,23 +54,28 @@
             />
             
             <label>Imagen</label>
-            <input type="file" name="file" class="form-control-file mb-3" id="file" value="{{ $post->file }}">
+            <input type="file" name="file" class="form-control-file mb-3" id="file" value="">
 
             <label>Estado</label>
             <select class="mb-3" style="display: block" name="status">
-              <option value="PUBLISHED">Publicado</option>
+            @if($post->status == 'PUBLISHED')
+              <option value="PUBLISHED" selected>Publicado</option>
               <option value="DRAFT">Borrador</option>
+            @else
+            <option value="DRAFT" selected>Borrador</option>
+            <option value="PUBLISHED" >Publicado</option>
+            @endif
             </select> 
             
               <div class="form-group">
                   <label>Etiquetas</label>
                 <div>
                   @foreach($tags as $tag)
-                  <input type="checkbox" name="tags[]" value="{{ $tag->id }}">{{$tag->name}}
+                  <input type="checkbox" name="tags[]" value="{{ $tag->id }}" >{{$tag->name}}
                   @endforeach
                 </div>
               </div>
-            
+              <!-- $post->tags->tag_id ? 'checked' : '' -->
               <label>Extracto</label>
             <div class="form-group">
             

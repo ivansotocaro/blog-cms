@@ -105,10 +105,19 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+
+        // $data = Post::select('posts.id as id_posts, posts.name as name_posts, posts.excerpt as excerpt_posts,
+        // posts.slug as slug_posts, posts.body as body_posts, posts.status as status_posts, posts.user_id as user_id_posts, posts.category_id as category_id_posts')
+        // ->join('categories', 'posts.category_id', '=', 'categories.id' )
+        // ->join('users', 'posts.user_id', '=', 'users.id')
+        // ->where('posts.id', $id)->get();
+
+        // return view('admin.post.edit', compact('data'));
+
         $categories = Category::orderBy('name', 'ASC')->get();
 
-        $tags       = Tag::orderBy('name', 'ASC')->get();
-
+        $tags       = Tag::all();
+        
         $post       = Post::find($id);
         
         return view('admin.post.edit', compact('post','categories','tags'));
