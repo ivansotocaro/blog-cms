@@ -116,11 +116,20 @@ class PostController extends Controller
 
         $categories = Category::orderBy('name', 'ASC')->get();
 
-        $tags       = Tag::all();
-        
+        $tags       = Tag::orderBy('name', 'ASC')->get();
+
         $post       = Post::find($id);
+
         
-        return view('admin.post.edit', compact('post','categories','tags'));
+        foreach($post->tags as $i => $posts){
+            $data[$i] = $posts->pivot->tag_id;
+        }
+        
+        
+            
+        
+        return view('admin.post.edit', compact('post','categories','tags', 'data'));
+
     }
 
     /**

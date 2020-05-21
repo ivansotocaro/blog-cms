@@ -70,8 +70,11 @@
               <div class="form-group">
                   <label>Etiquetas</label>
                 <div>
+              
                   @foreach($tags as $tag)
-                  <input type="checkbox" name="tags[]" value="{{ $tag->id }}" >{{$tag->name}}
+                  <input type="checkbox" name="tags[]" 
+                  value="{{ $tag->id }}"
+                  {{ $tag->id == $data ? 'checked' : '' }}>{{$tag->name}}
                   @endforeach
                 </div>
               </div>
@@ -83,7 +86,7 @@
             id="excerpt" 
             name="excerpt"
             rows="2"
-            cols="93">{{ $post->excerpt }}"</textarea>
+            cols="78">{{ $post->excerpt }}</textarea>
             </div>
 
             <label style="display: block" >Descripción</label>
@@ -104,9 +107,17 @@
   </div>
 </div>
 
+
+<!-- //estaba probando -->
+@foreach($data as $key => $value)
+
+  {{$value}}
+@endforeach
+
 @endsection
 
 @section('scripts')
 <script src="{{ asset('js/formPost.js') }}"></script>
-<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>;
+<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
 @endsection
+

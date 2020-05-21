@@ -72,7 +72,7 @@
             id="excerpt" 
             name="excerpt"
             rows="2"
-            cols="93"></textarea>
+            cols="78"></textarea>
             </div>
 
             <label >Descripción</label>
