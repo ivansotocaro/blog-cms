@@ -25,5 +25,12 @@ class Post extends Model
         return $this->belongsToMany(Tag::class)->withPivot('id','post_id', 'tag_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+
+
 
 }
