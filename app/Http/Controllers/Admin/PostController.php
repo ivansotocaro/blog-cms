@@ -93,7 +93,11 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        
+
+        $this->authorize('access', $post);
+
+        $tags   = Tag::orderBy('name', 'ASC')->get();
+
         return view('admin.post.show', compact('post'));
     }
 
@@ -106,6 +110,25 @@ class PostController extends Controller
     public function edit($id)
     {
 
+        $post       = Post::find($id);
+        $this->authorize('access', $post);
+
+        $categories = Category::orderBy('name', 'ASC')->get();
+        
+        $tags       = Tag::orderBy('name', 'ASC')->get();
+        
+        
+        
+        foreach($post->tags as $i => $posts){
+            $data[$i] = $posts->pivot->tag_id;
+        }
+
+        if(empty($data)) {
+            $data['0'] = 0;
+        }
+        
+        return view('admin.post.edit', compact('post','categories','tags', 'data'));
+
         // $data = Post::select('posts.id as id_posts, posts.name as name_posts, posts.excerpt as excerpt_posts,
         // posts.slug as slug_posts, posts.body as body_posts, posts.status as status_posts, posts.user_id as user_id_posts, posts.category_id as category_id_posts')
         // ->join('categories', 'posts.category_id', '=', 'categories.id' )
@@ -113,20 +136,7 @@ class PostController extends Controller
         // ->where('posts.id', $id)->get();
 
         // return view('admin.post.edit', compact('data'));
-
-        $categories = Category::orderBy('name', 'ASC')->get();
-
-        $tags       = Tag::orderBy('name', 'ASC')->get();
-
-        $post       = Post::find($id);
-
         
-        foreach($post->tags as $i => $posts){
-            $data[$i] = $posts->pivot->tag_id;
-        }
-
-        return view('admin.post.edit', compact('post','categories','tags', 'data'));
-
     }
 
     /**
@@ -139,7 +149,9 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
-        
+
+        $this->authorize('access', $post);
+
         $post->user_id = $request->user_id;
         $post->category_id = $request->category_id;
         $post->name = $request->name;
@@ -168,7 +180,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
+        $post = Post::find($id);
+
+        $this->authorize('access', $post);
+
+        $post->delete();
 
         return back()->with('delete', 'Eliminado Correctamente');
     }

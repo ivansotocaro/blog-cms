@@ -114,10 +114,10 @@
 
 
 <!-- //estaba probando -->
-@foreach($data as $key => $value)
+<!-- @foreach($data as $key => $value)
 
   {{$value}}
-@endforeach
+@endforeach -->
 
 @endsection
 

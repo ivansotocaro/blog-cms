@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="mb-4 text-center">
                             @if($post->file)
-                                <img src="{{ $post->file }}" class="img-responsive">
+                                <img src="{{ $post->file }}" class="img-responsive" width ='700' height='300'>
                             @endif
                         </div>
                       
