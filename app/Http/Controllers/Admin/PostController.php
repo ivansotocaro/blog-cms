@@ -124,10 +124,7 @@ class PostController extends Controller
         foreach($post->tags as $i => $posts){
             $data[$i] = $posts->pivot->tag_id;
         }
-        
-        
-            
-        
+
         return view('admin.post.edit', compact('post','categories','tags', 'data'));
 
     }

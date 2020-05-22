@@ -70,11 +70,16 @@
               <div class="form-group">
                   <label>Etiquetas</label>
                 <div>
-              
+                
                   @foreach($tags as $tag)
+                  
                   <input type="checkbox" name="tags[]" 
                   value="{{ $tag->id }}"
-                  {{ $tag->id == $data ? 'checked' : '' }}>{{$tag->name}}
+                  @if (in_array($tag->id, $data)) 
+                    checked="checked"
+                  @endif
+                 >{{$tag->name}}
+                 
                   @endforeach
                 </div>
               </div>
