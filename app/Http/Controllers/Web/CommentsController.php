@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Comment;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentStoreRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
@@ -36,7 +38,14 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment = new Comment();
+        $comment->user_id = auth()->user()->id;
+        $comment->post_id = $request->post_id;
+        $comment->body = $request->body;
+        $comment->save();
+
+        return back()->with('agregar', 'Comentario agregado');
+       
     }
 
     /**

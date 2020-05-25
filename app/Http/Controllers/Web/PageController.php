@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\User;
 
 class PageController extends Controller
 {
@@ -41,8 +42,22 @@ class PageController extends Controller
     public function post($slug)
     {
         $post = Post::where('slug', $slug)->first();
-        return view('web.post', compact('post'));
+        $users = User::all();
+
+        // foreach($user as $i => $users){
+        //         $user[$i] = $users;
+        // }
+        
+        foreach($post->comments as $i => $comment){
+            $comments[$i] = $comment;
+        }
+
+        
+
+        return view('web.post', compact('post', 'comments', 'users'));
     }
+
+   
 
    
 }

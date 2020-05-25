@@ -29,10 +29,16 @@ Route::get('categoria/{slug}',   'Web\PageController@categoria')->name('categori
 Route::get('etiqueta/{slug}',    'Web\PageController@etiqueta')->name('etiqueta');
 
 
+Route::resource('comment', 'Web\CommentsController');
+
+
+
 //Admin
 Route::resource('tags',       'Admin\TagController');
 
 Route::resource('categories', 'Admin\CategoryController');
 
 Route::resource('posts',      'Admin\PostController');
+
+
 

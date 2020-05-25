@@ -47,4 +47,109 @@
         </div>
         
     </div>
+
+
+  @if(Auth::check() == 'true')
+    <div class="container">
+ 
+      <div class="row justify-content-center">
+        
+        <div class="col-md-10  col-md-offset-2 ">
+            
+            <div class="card mb-5">
+
+                <div class="card-header ">
+                    <strong>Commentarios</strong>
+                </div>
+
+                <div class="card-body">
+                @if ( session('agregar') )
+                    <div class="alert alert-success">{{ session('agregar') }}</div>
+                @endif
+                <form  method="post" action="{{ route('comment.store') }}">
+                 @csrf
+
+                <input
+                id="post_id"
+                type="hidden"
+                name="post_id"
+                value="{{ $post->id }}"/>
+               
+                <textarea 
+                name="body" 
+                id="body" 
+                cols="100" 
+                rows="5"></textarea>
+
+                </div>
+
+                <div class="mb-3 mr-4" style="text-align: right">
+                  <button class="btn btn-primary btn-sm" type="submit">Agregar</button>
+                </div>
+
+                </form>
+               
+            </div>
+            
+        </div>
+     
+      </div>
+        
+    </div>
+  @else
+  <div class="container mb-4">
+    <div class="row justify-content-center">
+      <strong>No puedes realizar comentarios, debes registrarse primero</strong>
+    </div>
+  </div>
+  @endif
+
+
+  
+
+ 
+
+
+
+    @foreach($comments as $key => $comment)
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10  col-md-offset-2 ">
+          <div class="card mb-5">
+
+            <div class="card-header ">
+              <!-- traigo todos los usuarios de su modelo y los reitero haciendo una comparacion para poder mostrar el nombre del usuario que realizo ese comentario -->
+            @foreach($users as $key => $user)
+              <strong>
+                @if($user->id == $comment->user_id)
+                  {{ $user->name }}
+                  
+                   
+                @endif
+              </strong>
+              @endforeach
+            </div>
+
+            <div class="card-body">
+              <p>{{$comment->body}}</p>
+            </div>
+
+            <div class="card-footer text-muted">
+                    Creado: {{ $comment->created_at }}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+
+  <!-- @foreach($comments as $key => $value)
+
+    {{$value}}
+  @endforeach  -->
+
+ 
+
+
 @endsection
