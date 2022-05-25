@@ -1,0 +1,6 @@
+1.composer install
+2.Crear un nuevo archivo .env
+3.php artisan key:generate
+4.Creamos la base de datos
+5.php artisan migrate
+6.php artisan db:seed
